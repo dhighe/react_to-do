@@ -1,7 +1,9 @@
 const express = require('express');
 const logger = require('morgan');
-const path = require('path');
+// const path = require('path');
 const bodyParser = require('body-parser');
+const homeRoute = require('./routes/index');
+const tasksRoute = require('./routes/tasks');
 
 const isDev = !('NODE_ENV' in process.env) && require('dotenv').config() && true;
 
@@ -18,5 +20,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/', homeRoute);
+app.use('/tasks', tasksRoute);
+// app.use(express.static(path.join(__dirname, 'public')));
 
